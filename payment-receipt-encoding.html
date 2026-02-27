@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payment Receipt Encoding</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-page="payment-receipt-encoding">
+  <div class="app-shell">
+    <header class="topbar">
+      <img class="logo-image" src="favicon.png" alt="favicon logo" />
+      <div>
+        <h1>Payment Receipt Encoding</h1>
+        <p class="subtitle">Invoice: Y (downpayment) or AC (full payment)</p>
+      </div>
+      <div class="pending-card" aria-live="polite">
+        <span class="pending-label">Total Rows</span>
+        <span id="pendingCount" class="pending-value">0</span>
+      </div>
+    </header>
+
+    <main class="dashboard-card">
+      <section class="controls" aria-label="Filters">
+        <a href="index.html" class="btn btn-secondary">Home</a>
+
+        <label class="control-field">
+          <span>Search Name</span>
+          <input id="searchInput" type="text" placeholder="Type first or last name..." />
+        </label>
+
+        <label class="control-field">
+          <span>Filter Tour</span>
+          <select id="tourFilter">
+            <option value="">All Tours</option>
+          </select>
+        </label>
+
+        <button id="refreshBtn" class="btn btn-secondary" type="button">Refresh</button>
+      </section>
+
+      <section class="table-wrap" aria-live="polite">
+        <div id="loadingOverlay" class="loading-overlay" hidden>
+          <div class="spinner" aria-hidden="true"></div>
+          <p>Loading bookings...</p>
+        </div>
+
+        <div class="table-scroll">
+          <table>
+            <thead id="tableHead"></thead>
+            <tbody id="bookingsBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <div id="receiptModal" class="modal" hidden>
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="receiptModalTitle">
+      <h3 id="receiptModalTitle">Encode Receipt</h3>
+      <p id="receiptBookingInfo" class="modal-subtext"></p>
+
+      <div class="modal-grid">
+        <div>
+          <label class="modal-label">Y (Downpayment Invoice)</label>
+          <div id="receiptDownValue" class="modal-value">-</div>
+        </div>
+        <div>
+          <label class="modal-label">AC (Full Payment Invoice)</label>
+          <div id="receiptFullValue" class="modal-value">-</div>
+        </div>
+      </div>
+
+      <label class="modal-label" for="receiptTypeSelect">Payment Type</label>
+      <select id="receiptTypeSelect">
+        <option value="downpayment">Downpayment</option>
+        <option value="full">Full Payment</option>
+      </select>
+
+      <div id="downpaymentAmountGroup" hidden>
+        <label class="modal-label" for="downpaymentAmountInput">Encoded Downpayment Amount (Column X)</label>
+        <input id="downpaymentAmountInput" type="number" min="0" step="0.01" placeholder="Enter downpayment amount" />
+        <p class="modal-subtext">Current column X amount: <span id="downpaymentCurrentValue">-</span></p>
+        <p id="downpaymentValidationNote" class="validation-note" hidden></p>
+      </div>
+
+      <div id="fullPaymentAmountGroup" hidden>
+        <label class="modal-label" for="fullPaymentAmountInput">Encoded Full Payment Amount (Must match Column Z)</label>
+        <input id="fullPaymentAmountInput" type="number" min="0" step="0.01" placeholder="Enter full payment amount" />
+        <p class="modal-subtext">Required exact column Z amount: <span id="fullPaymentCurrentValue">-</span></p>
+        <p id="fullPaymentValidationNote" class="validation-note" hidden></p>
+      </div>
+
+      <label class="modal-label" for="receiptInvoiceInput">Invoice Number</label>
+      <input id="receiptInvoiceInput" type="text" placeholder="Enter invoice #" />
+
+      <label class="modal-label" for="receiptFileInput">Receipt Image (optional)</label>
+      <input id="receiptFileInput" type="file" accept="image/*" />
+
+      <div class="modal-actions">
+        <button id="receiptCancelBtn" class="btn btn-secondary" type="button">Cancel</button>
+        <button id="receiptSaveBtn" class="btn btn-primary" type="button">Save</button>
+      </div>
+      <div id="receiptSavingIndicator" class="saving-indicator" hidden>
+        <span class="saving-spinner" aria-hidden="true"></span>
+        <span>Saving invoice and receipt image...</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

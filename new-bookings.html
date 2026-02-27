@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>New Booking Pending Send Whatsapp</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-page="new-bookings">
+  <div class="app-shell">
+    <header class="topbar">
+      <img class="logo-image" src="favicon.png" alt="favicon logo" />
+      <div>
+        <h1>New Booking Pending Send Whatsapp</h1>
+        <p class="subtitle">Click Send and Ok then check the message in whatsapp before hit send</p>
+      </div>
+      <div class="pending-card" aria-live="polite">
+        <span class="pending-label">Total Pending</span>
+        <span id="pendingCount" class="pending-value">0</span>
+      </div>
+    </header>
+
+    <main class="dashboard-card">
+      <section class="controls" aria-label="Filters">
+        <a href="index.html" class="btn btn-secondary">Home</a>
+
+        <label class="control-field">
+          <span>Search Name</span>
+          <input id="searchInput" type="text" placeholder="Type first or last name..." />
+        </label>
+
+        <label class="control-field">
+          <span>Filter Tour</span>
+          <select id="tourFilter">
+            <option value="">All Tours</option>
+          </select>
+        </label>
+
+        <button id="refreshBtn" class="btn btn-secondary" type="button">Refresh</button>
+      </section>
+
+      <section class="table-wrap" aria-live="polite">
+        <div id="loadingOverlay" class="loading-overlay" hidden>
+          <div class="spinner" aria-hidden="true"></div>
+          <p>Loading bookings...</p>
+        </div>
+
+        <div class="table-scroll">
+          <table>
+            <thead id="tableHead"></thead>
+            <tbody id="bookingsBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <div id="sendConfirmModal" class="modal" hidden>
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="sendConfirmTitle">
+      <h3 id="sendConfirmTitle">Confirm Send</h3>
+      <p id="sendConfirmMessage" class="modal-subtext">Open WhatsApp and mark this row as sent?</p>
+      <div class="modal-actions">
+        <button id="sendConfirmCancel" class="btn btn-secondary" type="button">Cancel</button>
+        <button id="sendConfirmOk" class="btn btn-primary" type="button">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
