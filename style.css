@@ -122,6 +122,67 @@ body {
   display: block;
 }
 
+.menu-badge {
+  float: right;
+  min-width: 26px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--danger);
+  color: #fff;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.commissions-unpaid-section {
+  margin-top: 14px;
+}
+
+.commissions-unpaid-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.commissions-unpaid-header h2 {
+  margin: 0 0 6px;
+  font-size: 1.1rem;
+}
+
+.commissions-unpaid-header p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.commissions-unpaid-table {
+  min-width: 680px;
+}
+
+.commissions-unpaid-click-row {
+  cursor: pointer;
+}
+
+.commissions-unpaid-detail-row td {
+  background: var(--bg-soft);
+}
+
+.commissions-unpaid-detail-wrap {
+  padding: 8px 0;
+}
+
+.commissions-unpaid-detail-table {
+  width: 100%;
+  min-width: 820px;
+  border-collapse: collapse;
+}
+
+.commissions-unpaid-detail-table th,
+.commissions-unpaid-detail-table td {
+  padding: 9px 10px;
+  border-bottom: 1px solid var(--line);
+}
+
 .menu-btn:hover {
   border-color: rgba(38, 58, 91, 0.45);
   background: rgba(38, 58, 91, 0.08);
@@ -166,6 +227,98 @@ input:focus,
 select:focus {
   border-color: var(--primary);
   box-shadow: 0 0 0 3px rgba(38, 58, 91, 0.15);
+}
+
+.multi-date-dropdown {
+  position: relative;
+}
+
+.multi-date-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--text);
+  padding: 10px 12px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.multi-date-toggle::after {
+  content: "▾";
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1;
+  transition: transform 0.15s ease;
+}
+
+.multi-date-toggle[aria-expanded="true"]::after {
+  transform: rotate(180deg);
+}
+
+.multi-date-toggle:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(38, 58, 91, 0.15);
+}
+
+.multi-date-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 40;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: 0 10px 24px rgba(16, 24, 40, 0.12);
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.multi-date-options {
+  padding: 6px;
+}
+
+.multi-date-option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.multi-date-option:hover {
+  background: rgba(38, 58, 91, 0.08);
+}
+
+.multi-date-circle {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--line);
+  background: #fff;
+  flex: 0 0 16px;
+}
+
+.multi-date-option.selected .multi-date-circle {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+.multi-date-empty {
+  color: var(--muted);
+  padding: 8px 10px;
+  font-size: 0.9rem;
 }
 
 .btn {
@@ -435,6 +588,237 @@ th {
   margin-top: 14px;
 }
 
+.receipt-link-btn {
+  border: none;
+  background: transparent;
+  color: var(--primary);
+  font: inherit;
+  font-weight: 700;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.receipt-link-btn:hover {
+  color: var(--accent);
+}
+
+.summary-coupon-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.summary-list {
+  display: grid;
+  gap: 12px;
+}
+
+.summary-card {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px;
+  background: #fff;
+  overflow: visible;
+}
+
+.summary-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.summary-card-header h3 {
+  margin: 0;
+  font-size: clamp(0.72rem, 1.4vw, 0.9rem);
+  line-height: 1.2;
+  white-space: normal;
+  word-break: break-word;
+  overflow: visible;
+}
+
+.summary-card-header > div:last-child {
+  flex-shrink: 0;
+}
+
+.summary-card .table-scroll {
+  overflow-x: visible;
+}
+
+.summary-card table {
+  min-width: 100%;
+  table-layout: auto;
+}
+
+.summary-card th,
+.summary-card td {
+  white-space: normal;
+  word-break: break-word;
+}
+
+.summary-card th:nth-child(3),
+.summary-card th:nth-child(4),
+.summary-card td:nth-child(3),
+.summary-card td:nth-child(4) {
+  white-space: normal;
+  word-break: break-word;
+  font-size: clamp(0.72rem, 1.5vw, 0.92rem);
+}
+
+.summary-card th {
+  font-size: clamp(0.68rem, 1.2vw, 0.82rem);
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.2;
+}
+
+.summary-grand-total-row td strong {
+  white-space: nowrap;
+  font-size: clamp(0.72rem, 1.5vw, 0.92rem);
+}
+
+.summary-card thead th:first-child,
+.summary-card tbody td:first-child {
+  position: static;
+}
+
+.summary-grand-total-row td {
+  border-top: 1px solid var(--line);
+}
+
+.travel-date-summary {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 0;
+  margin-bottom: 12px;
+}
+
+.travel-date-summary-list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(120px, 1fr));
+  gap: 10px;
+}
+
+.travel-date-donut-item {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  text-align: center;
+}
+
+.travel-date-donut {
+  --completed-angle: 0deg;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: conic-gradient(
+    color-mix(in srgb, var(--success) 35%, white) 0deg var(--completed-angle),
+    color-mix(in srgb, var(--danger) 35%, white) var(--completed-angle) 360deg
+  );
+  display: grid;
+  place-items: center;
+}
+
+.travel-date-donut-inner {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 1px solid var(--line);
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text);
+}
+
+.travel-date-donut-date {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.travel-date-donut-meta {
+  margin: 0;
+  font-size: 0.72rem;
+  color: var(--muted);
+  line-height: 1.2;
+}
+
+body[data-page="commissions-payment-summary"] .app-shell {
+  max-width: 100%;
+  padding: 6px;
+}
+
+body[data-page="commissions-payment-summary"] .topbar {
+  margin: 0 0 8px;
+}
+
+body[data-page="commissions-payment-summary"] .dashboard-card {
+  border-radius: 8px;
+}
+
+body[data-page="commissions-payment-summary"] .controls {
+  padding: 8px;
+  gap: 8px;
+}
+
+body[data-page="commissions-payment-summary"] .menu-card {
+  padding: 8px;
+  border-radius: 8px;
+  margin: 0;
+}
+
+body[data-page="commissions-payment-summary"] .summary-list {
+  gap: 8px;
+}
+
+body[data-page="commissions-payment-summary"] .summary-card {
+  padding: 8px;
+  margin: 0;
+}
+
+.image-viewer-content {
+  width: min(94vw, 980px);
+  padding: 14px;
+}
+
+.image-viewer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.image-viewer-header h3 {
+  margin: 0;
+}
+
+.image-viewer-body {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #f7f7f8;
+  display: grid;
+  place-items: center;
+  padding: 8px;
+  min-height: 280px;
+  max-height: 75vh;
+  overflow: auto;
+}
+
+.image-viewer-body img {
+  display: block;
+  max-width: 100%;
+  max-height: 70vh;
+  width: auto;
+  height: auto;
+  border-radius: 8px;
+}
+
 .validation-note {
   margin: 6px 0 0;
   color: #b91c1c;
@@ -460,6 +844,41 @@ th {
   animation: spin 0.8s linear infinite;
 }
 
+.auth-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 4000;
+  background: rgba(0, 0, 0, 0.42);
+  display: grid;
+  place-items: center;
+  padding: 14px;
+}
+
+.auth-modal[hidden] {
+  display: none;
+}
+
+.auth-modal-card {
+  width: min(96vw, 420px);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: 0 10px 30px rgba(16, 24, 40, 0.22);
+  display: grid;
+  gap: 10px;
+}
+
+.auth-modal-card h3 {
+  margin: 0;
+}
+
+.auth-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
 @media (max-width: 860px) {
   .controls {
     grid-template-columns: 1fr;
@@ -477,11 +896,48 @@ th {
     flex-direction: column;
     align-items: flex-start;
   }
+
+  .travel-date-summary-list {
+    grid-template-columns: repeat(3, minmax(110px, 1fr));
+  }
 }
 
 @media (max-width: 620px) {
   .app-shell {
     padding: 12px;
+  }
+
+  .summary-card {
+    padding: 10px;
+  }
+
+  .summary-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .summary-card-header > div:last-child {
+    width: 100%;
+  }
+
+  .summary-card-header > div:last-child .btn {
+    width: 100%;
+  }
+
+  .travel-date-summary-list {
+    grid-template-columns: repeat(2, minmax(100px, 1fr));
+  }
+
+  .travel-date-donut {
+    width: 78px;
+    height: 78px;
+  }
+
+  .travel-date-donut-inner {
+    width: 52px;
+    height: 52px;
+    font-size: 0.92rem;
   }
 
   th,

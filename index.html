@@ -21,12 +21,15 @@
       <h2>Quick Actions</h2>
       <p>Select one workflow page.</p>
       <div class="menu-grid">
-        <a class="menu-btn" href="new-bookings.html">New Booking Pending Send WhatsApp</a>
-        <a class="menu-btn" href="confirmed-whatsapp.html">Confirmed Guest Send WhatsApp</a>
-        <a class="menu-btn" href="bookings-dashboard.html">Bookings Dashboard</a>
-        <a class="menu-btn" href="payment-receipt-encoding.html">Payment Receipt Encoding</a>
+        <a class="menu-btn" href="new-bookings.html">New Booking Pending Send WhatsApp <span id="homeNewPendingCount" class="menu-badge" hidden>0</span></a>
+        <a class="menu-btn" href="confirmed-whatsapp.html">Confirmed Guest Send WhatsApp <span id="homeConfirmedPendingCount" class="menu-badge" hidden>0</span></a>
+        <a class="menu-btn" href="bookings-dashboard.html">Bookings Dashboard <span id="homeDashboardPendingCount" class="menu-badge" hidden>0</span></a>
+        <a class="menu-btn" href="payment-receipt-encoding.html">Guest Payment Receipt Encoding <span id="homePaymentNoInvoiceCount" class="menu-badge" hidden>0</span></a>
+        <a class="menu-btn" href="commissions-payment-receipt-encoding.html">Encoding Payment Receipt in Commissions <span id="homeCommissionsUnpaidDateCount" class="menu-badge" hidden>0</span></a>
+        <a class="menu-btn" href="commissions-payment-summary.html">Commissions Payment Summary</a>
       </div>
     </section>
   </div>
+  <script src="script.js" defer></script>
 </body>
 </html>

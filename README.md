@@ -53,6 +53,7 @@ Your public site URL will be:
 - `confirmed-whatsapp.html` - Confirmed guest WhatsApp send flow
 - `bookings-dashboard.html` - Dashboard view
 - `payment-receipt-encoding.html` - Receipt encoding view
+- `commissions-payment-receipt-encoding.html` - Bulk commissions receipt encoding (Travel Date + Coupon + SUM AA)
 - `style.css` - Shared styles
 - `script.js` - Shared frontend logic and API calls
 - `google-apps-script.gs` - Backend for Google Apps Script

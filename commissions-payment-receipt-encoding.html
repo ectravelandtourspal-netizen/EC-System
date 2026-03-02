@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Commissions Payment Receipt Encoding</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-page="commissions-payment">
+  <div class="app-shell">
+    <header class="topbar">
+      <img class="logo-image" src="favicon.png" alt="favicon logo" />
+      <div>
+        <h1>Commissions: Payment Receipt Encoding</h1>
+        <p class="subtitle">Bulk setup by Travel Date and Coupon Code</p>
+      </div>
+      <div class="pending-card" aria-live="polite" aria-label="Matching Bookings">
+        <span class="pending-label">Matching Bookings</span>
+        <span id="commissionsBookingCount" class="pending-value">0</span>
+      </div>
+    </header>
+
+    <main class="dashboard-card">
+      <section class="controls" aria-label="Bulk Filters">
+        <a href="index.html" class="btn btn-secondary">Home</a>
+        <button id="refreshBtn" class="btn btn-secondary" type="button">Refresh</button>
+      </section>
+
+      <section class="menu-card" aria-label="Commissions Bulk Encoding">
+        <div class="modal-grid">
+          <label class="control-field">
+            <span>Coupon Code</span>
+            <select id="commissionsCouponCode" disabled>
+              <option value="">Select coupon code</option>
+            </select>
+          </label>
+
+          <label class="control-field">
+            <span>Travel Dates</span>
+            <div id="commissionsTravelDateDropdown" class="multi-date-dropdown">
+              <button id="commissionsTravelDateToggle" class="multi-date-toggle" type="button" aria-haspopup="listbox" aria-expanded="false" disabled>
+                <span id="commissionsTravelDateLabel">Select coupon code first</span>
+              </button>
+              <div id="commissionsTravelDateMenu" class="multi-date-menu" hidden>
+                <div id="commissionsTravelDateOptions" class="multi-date-options" role="listbox" aria-label="Travel dates"></div>
+              </div>
+            </div>
+          </label>
+        </div>
+
+        <div class="modal-grid">
+          <div>
+            <label class="modal-label">Total Amount</label>
+            <div id="commissionsSumAA" class="modal-value">₱0.00</div>
+          </div>
+          <div>
+            <label class="modal-label">Entered Receipt Amount</label>
+            <input id="commissionsReceiptAmount" type="number" min="0" step="0.01" placeholder="Enter exact amount" disabled />
+          </div>
+        </div>
+
+        <p id="commissionsAmountValidation" class="validation-note" hidden></p>
+
+        <label class="modal-label" for="commissionsInvoiceInput">Receipt Invoice Number</label>
+        <input id="commissionsInvoiceInput" type="text" placeholder="Enter invoice number" disabled />
+
+        <label class="modal-label" for="commissionsReceiptFile">Upload Receipt Image (REQUIRED)</label>
+        <input id="commissionsReceiptFile" type="file" accept="image/*" disabled />
+
+        <div class="modal-actions">
+          <button id="commissionsSaveBtn" class="btn btn-primary" type="button" disabled>Save Commissions Receipt</button>
+        </div>
+
+        <div id="commissionsSavingIndicator" class="saving-indicator" hidden>
+          <span class="saving-spinner" aria-hidden="true"></span>
+          <span>Saving commissions receipt...</span>
+        </div>
+      </section>
+
+      <section class="menu-card commissions-unpaid-section" aria-label="Unpaid Travel Dates Dashboard">
+        <div class="commissions-unpaid-header">
+          <div>
+            <h2>Unpaid Travel Dates Dashboard</h2>
+            <p>Travel dates with commissions not marked as paid.</p>
+          </div>
+          <div class="pending-card" aria-live="polite" aria-label="Unpaid Travel Dates">
+            <span class="pending-label">Unpaid Travel Dates</span>
+            <span id="commissionsUnpaidDatesCount" class="pending-value">0</span>
+          </div>
+        </div>
+
+        <div class="table-scroll">
+          <table class="commissions-unpaid-table">
+            <thead>
+              <tr>
+                <th>Travel Date</th>
+                <th>Unpaid Bookings</th>
+                <th>Coupon Codes</th>
+                <th>Total Amount</th>
+              </tr>
+            </thead>
+            <tbody id="commissionsUnpaidDatesBody">
+              <tr>
+                <td colspan="4" class="empty-state">No unpaid travel dates found.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="table-wrap" aria-live="polite">
+        <div id="loadingOverlay" class="loading-overlay" hidden>
+          <div class="spinner" aria-hidden="true"></div>
+          <p>Loading bookings...</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

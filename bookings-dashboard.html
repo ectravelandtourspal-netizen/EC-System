@@ -16,10 +16,15 @@
         <p class="subtitle">Shows Status if Booking Has Pending Payment Or Completed</p>
       </div>
       <div class="pending-card" aria-live="polite">
-        <span class="pending-label">Total Rows</span>
+        <span class="pending-label">Total Pending Payment</span>
         <span id="pendingCount" class="pending-value">0</span>
       </div>
     </header>
+
+    <section class="travel-date-summary" aria-label="Upcoming Travel Date Summary">
+      <div id="travelDateSummaryList" class="travel-date-summary-list"></div>
+      <p id="travelDateSummaryEmpty" class="modal-subtext" hidden>No incoming travel dates found.</p>
+    </section>
 
     <main class="dashboard-card">
       <section class="controls" aria-label="Filters">
@@ -72,6 +77,47 @@
       <div class="modal-actions">
         <button id="sendConfirmCancel" class="btn btn-secondary" type="button">Cancel</button>
         <button id="sendConfirmOk" class="btn btn-primary" type="button">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="receiptImageViewer" class="modal" hidden>
+    <div class="modal-content image-viewer-content" role="dialog" aria-modal="true" aria-labelledby="receiptImageViewerTitle">
+      <div class="image-viewer-header">
+        <h3 id="receiptImageViewerTitle">Receipt Image</h3>
+        <button id="receiptImageViewerClose" class="btn btn-secondary" type="button">Close</button>
+      </div>
+      <div class="image-viewer-body">
+        <img id="receiptImageViewerImg" alt="Receipt image preview" />
+      </div>
+    </div>
+  </div>
+
+  <div id="cancelReasonModal" class="modal" hidden>
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="cancelReasonTitle">
+      <h3 id="cancelReasonTitle">Booking Action</h3>
+      <p id="cancelReasonBookingInfo" class="modal-subtext">Select slot and reason for this booking.</p>
+
+      <div class="modal-grid">
+        <label>
+          <span class="modal-label">Slot</span>
+          <select id="cancelReasonSlot">
+            <option value="">Select</option>
+            <option value="cancel">Cancel</option>
+          </select>
+        </label>
+      </div>
+
+      <div id="cancelReasonInputGroup">
+        <label>
+          <span class="modal-label">Reason</span>
+          <input id="cancelReasonInput" type="text" placeholder="Enter cancellation reason" />
+        </label>
+      </div>
+
+      <div class="modal-actions">
+        <button id="cancelReasonCancelBtn" class="btn btn-secondary" type="button">Close</button>
+        <button id="cancelReasonSaveBtn" class="btn btn-primary" type="button">Save</button>
       </div>
     </div>
   </div>

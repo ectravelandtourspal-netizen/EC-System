@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Payment Receipt Encoding</title>
+  <title>Guest Payment Receipt Encoding</title>
   <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -16,7 +16,7 @@
         <p class="subtitle">Invoice: Y (downpayment) or AC (full payment)</p>
       </div>
       <div class="pending-card" aria-live="polite">
-        <span class="pending-label">Total Rows</span>
+        <span class="pending-label">Total No Invoice (AC)</span>
         <span id="pendingCount" class="pending-value">0</span>
       </div>
     </header>
@@ -107,6 +107,18 @@
       <div id="receiptSavingIndicator" class="saving-indicator" hidden>
         <span class="saving-spinner" aria-hidden="true"></span>
         <span>Saving invoice and receipt image...</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="receiptImageViewer" class="modal" hidden>
+    <div class="modal-content image-viewer-content" role="dialog" aria-modal="true" aria-labelledby="receiptImageViewerTitle">
+      <div class="image-viewer-header">
+        <h3 id="receiptImageViewerTitle">Receipt Image</h3>
+        <button id="receiptImageViewerClose" class="btn btn-secondary" type="button">Close</button>
+      </div>
+      <div class="image-viewer-body">
+        <img id="receiptImageViewerImg" alt="Receipt image preview" />
       </div>
     </div>
   </div>

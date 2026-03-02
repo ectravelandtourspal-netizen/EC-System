@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Commissions Payment Summary</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-page="commissions-payment-summary">
+  <div class="app-shell">
+    <header class="topbar">
+      <img class="logo-image" src="favicon.png" alt="favicon logo" />
+      <div>
+        <h1>Commissions Payment Summary</h1>
+        <p class="subtitle">View payment summaries grouped by coupon code</p>
+      </div>
+    </header>
+
+    <main class="dashboard-card">
+      <section class="controls" aria-label="Summary Controls">
+        <a href="index.html" class="btn btn-secondary">Home</a>
+        <button id="refreshBtn" class="btn btn-secondary" type="button">Refresh</button>
+      </section>
+
+      <section class="menu-card" aria-label="Coupon Code Buttons">
+        <h2>Coupon Codes</h2>
+        <div id="commissionSummaryButtons" class="summary-coupon-buttons"></div>
+      </section>
+
+      <section class="menu-card" aria-label="Payment Summaries">
+        <h2>Payment Summaries</h2>
+        <p id="commissionSummaryEmpty" class="modal-subtext">Loading payment summaries...</p>
+        <div id="commissionSummaryList" class="summary-list"></div>
+      </section>
+
+      <section class="table-wrap" aria-live="polite">
+        <div id="loadingOverlay" class="loading-overlay" hidden>
+          <div class="spinner" aria-hidden="true"></div>
+          <p>Loading payment summaries...</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <div id="receiptImageViewer" class="modal" hidden>
+    <div class="modal-content image-viewer-content" role="dialog" aria-modal="true" aria-labelledby="receiptImageViewerTitle">
+      <div class="image-viewer-header">
+        <h3 id="receiptImageViewerTitle">Receipt Image</h3>
+        <button id="receiptImageViewerClose" class="btn btn-secondary" type="button">Close</button>
+      </div>
+      <div class="image-viewer-body">
+        <img id="receiptImageViewerImg" alt="Receipt image preview" />
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
