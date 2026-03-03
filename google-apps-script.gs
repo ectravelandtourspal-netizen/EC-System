@@ -604,6 +604,7 @@ function appendInfluencerPaymentReport_(targetDates, dateSummary, invoiceNumber,
   const startRow = REPORT_START_ROW;
   const rowsToInsert = dataRows.length + 5;
   shiftReportBlockDown_(reportSheet, startCol, rowsToInsert);
+  const datePaidText = formatReportDatePaid_(new Date());
 
   const endCol = startCol + 3;
   const urlCol = startCol + 4;
@@ -615,7 +616,7 @@ function appendInfluencerPaymentReport_(targetDates, dateSummary, invoiceNumber,
   reportSheet.getRange(titleRow, startCol).setValue(`SUMMARY OF PAYMENT WITH INVOICE # ${invoiceNumber}`);
   reportSheet.getRange(titleRow, startCol).setFontWeight('bold');
 
-  reportSheet.getRange(headerRow, startCol, 1, REPORT_BLOCK_WIDTH).setValues([['DATES', 'NO. OF BOOKINGS', 'AMOUNT', 'TOTAL', 'RECEIPT URL']]);
+  reportSheet.getRange(headerRow, startCol, 1, REPORT_BLOCK_WIDTH).setValues([['TRAVEL DATES', 'NO. OF BOOKINGS', 'AMOUNT', 'TOTAL', 'DATE PAID/RECEIPT']]);
   reportSheet.getRange(headerRow, startCol, 1, REPORT_BLOCK_WIDTH).setFontWeight('bold');
 
   const dataStartRow = startRow + 2;
@@ -628,6 +629,8 @@ function appendInfluencerPaymentReport_(targetDates, dateSummary, invoiceNumber,
     return [`=${bookingsCol}${row}*${amountCol}${row}`];
   });
   reportSheet.getRange(dataStartRow, endCol, dataRows.length, 1).setFormulas(totalFormulas);
+  reportSheet.getRange(dataStartRow, urlCol, dataRows.length, 1).clearContent();
+  reportSheet.getRange(dataStartRow, urlCol).setValue(datePaidText);
 
   const grandTotalRow = dataStartRow + dataRows.length;
   const totalColLetter = columnToLetter_(endCol);
@@ -1009,6 +1012,19 @@ function formatDate_(value) {
     return Utilities.formatDate(value, Session.getScriptTimeZone(), 'yyyy-MM-dd');
   }
   return safeText_(value);
+}
+
+function formatReportDatePaid_(value) {
+  if (Object.prototype.toString.call(value) === '[object Date]' && !isNaN(value.getTime())) {
+    return Utilities.formatDate(value, Session.getScriptTimeZone(), 'MMM. dd, yyyy').toUpperCase();
+  }
+
+  const parsed = new Date(value);
+  if (!isNaN(parsed.getTime())) {
+    return Utilities.formatDate(parsed, Session.getScriptTimeZone(), 'MMM. dd, yyyy').toUpperCase();
+  }
+
+  return '';
 }
 
 function normalizeDateKey_(value) {
