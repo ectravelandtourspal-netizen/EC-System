@@ -1,4 +1,4 @@
-const API_URL = "https://script.google.com/macros/s/AKfycbzVCOri-Rgw1NFxGYKsoDoCsDZEokXyvy1OgMn85CM3InntUF7PnEkZrQrlMHFplcgq/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbw4TpIVz1_Rqishu7LVbMgmx8jaoa6z0SFqnGLUbLBHJ17qKb-SDdm0M1EVm5HwdpKc/exec";
 const CLOUDINARY_CLOUD_NAME = "dkd5mtpid";
 const CLOUDINARY_UPLOAD_PRESET = "EC_APP";
 const CLOUDINARY_FOLDER = "ec-app-receipts";
