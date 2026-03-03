@@ -585,6 +585,8 @@ function appendInfluencerPaymentReport_(targetDates, dateSummary, invoiceNumber,
     reportSheet = spreadsheet.insertSheet(REPORT_SHEET_NAME);
   }
 
+  backfillInfluencerPaymentReport_(reportSheet);
+
   const startCol = getCouponBlockStartCol_(reportSheet, couponCode);
   const sortedDates = [...targetDates].sort((a, b) => a.localeCompare(b));
   const dataRows = sortedDates
@@ -695,6 +697,8 @@ function getCommissionPaymentSummaries_() {
     return jsonResponse_({ status: 'success', groups: [] });
   }
 
+  backfillInfluencerPaymentReport_(reportSheet);
+
   const lastCol = Math.max(reportSheet.getLastColumn(), 1);
   const lastRow = Math.max(reportSheet.getLastRow(), REPORT_START_ROW);
   const rowCount = Math.max(lastRow - REPORT_START_ROW + 1, 1);
@@ -793,6 +797,69 @@ function getCouponBlockStartCol_(reportSheet, couponCode) {
   const nextCol = occupiedCols.length ? Math.max(...occupiedCols) + stride : 1;
   reportSheet.getRange(1, nextCol).setValue(normalizedCoupon);
   return nextCol;
+}
+
+function backfillInfluencerPaymentReport_(reportSheet) {
+  if (!reportSheet) return;
+
+  const lastCol = Math.max(reportSheet.getLastColumn(), 1);
+  const lastRow = Math.max(reportSheet.getLastRow(), REPORT_START_ROW);
+  if (lastRow < REPORT_START_ROW) return;
+
+  const markerRow = reportSheet.getRange(1, 1, 1, lastCol).getDisplayValues()[0];
+  const markerCols = [];
+  markerRow.forEach((value, idx) => {
+    if (safeText_(value)) {
+      markerCols.push(idx + 1);
+    }
+  });
+  if (!markerCols.length) return;
+
+  const rowCount = Math.max(lastRow - REPORT_START_ROW + 1, 1);
+  const todayText = formatReportDatePaid_(new Date());
+
+  markerCols.forEach((startCol) => {
+    const values = reportSheet.getRange(REPORT_START_ROW, startCol, rowCount, REPORT_BLOCK_WIDTH).getDisplayValues();
+
+    for (let i = 0; i < values.length; i += 1) {
+      const title = safeText_(values[i][0]);
+      if (!title.startsWith('SUMMARY OF PAYMENT WITH INVOICE #')) continue;
+
+      const headerSheetRow = REPORT_START_ROW + i + 1;
+      const currentHeader = reportSheet.getRange(headerSheetRow, startCol, 1, REPORT_BLOCK_WIDTH).getDisplayValues()[0];
+      const normalizedHeader = currentHeader.map((cell) => safeText_(cell).toUpperCase());
+      const needsHeaderUpdate = normalizedHeader[0] !== 'TRAVEL DATES' || normalizedHeader[4] !== 'DATE PAID/RECEIPT';
+      if (needsHeaderUpdate) {
+        reportSheet.getRange(headerSheetRow, startCol, 1, REPORT_BLOCK_WIDTH).setValues([['TRAVEL DATES', 'NO. OF BOOKINGS', 'AMOUNT', 'TOTAL', 'DATE PAID/RECEIPT']]);
+        reportSheet.getRange(headerSheetRow, startCol, 1, REPORT_BLOCK_WIDTH).setFontWeight('bold');
+      }
+
+      const dataStartOffset = i + 2;
+      if (dataStartOffset >= values.length) {
+        continue;
+      }
+
+      for (let j = dataStartOffset; j < values.length; j += 1) {
+        const line = values[j];
+        const amountText = safeText_(line[2]).toUpperCase();
+        if (amountText === 'GRAND TOTAL') {
+          i = j;
+          break;
+        }
+
+        const hasData = safeText_(line[0]) || safeText_(line[1]) || safeText_(line[2]) || safeText_(line[3]);
+        if (!hasData) {
+          continue;
+        }
+
+        const datePaidCell = safeText_(line[4]);
+        if (!datePaidCell) {
+          reportSheet.getRange(REPORT_START_ROW + j, startCol + 4).setValue(todayText);
+        }
+        break;
+      }
+    }
+  });
 }
 
 function getNextReportStartRowForBlock_(reportSheet, startCol) {
