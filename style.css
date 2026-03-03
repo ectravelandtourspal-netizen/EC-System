@@ -873,6 +873,43 @@ body[data-page="commissions-payment-summary"] .summary-card {
   margin: 0;
 }
 
+.auth-password-wrap {
+  position: relative;
+}
+
+.auth-password-wrap input {
+  padding-right: 80px;
+}
+
+.auth-password-toggle {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--text);
+  padding: 5px 10px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  min-width: 64px;
+  cursor: pointer;
+}
+
+.auth-password-toggle:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(38, 58, 91, 0.15);
+}
+
+.auth-login-error {
+  margin: 6px 0 0;
+  color: var(--danger);
+  font-size: 0.83rem;
+  font-weight: 600;
+}
+
 .auth-modal-actions {
   display: flex;
   justify-content: flex-end;
@@ -938,6 +975,15 @@ body[data-page="commissions-payment-summary"] .summary-card {
     width: 52px;
     height: 52px;
     font-size: 0.92rem;
+  }
+
+  .auth-password-wrap input {
+    padding-right: 88px;
+  }
+
+  .auth-password-toggle {
+    min-height: 34px;
+    font-size: 0.82rem;
   }
 
   th,
