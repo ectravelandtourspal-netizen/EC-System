@@ -225,18 +225,28 @@ function ensureAuthModal_() {
         </label>
         <label>
           <span class="modal-label">Password</span>
-          <input id="authPassword" type="password" autocomplete="current-password" />
+          <div class="auth-password-wrap">
+            <input id="authPassword" type="password" autocomplete="current-password" />
+            <button id="authPasswordToggle" class="auth-password-toggle" type="button" aria-label="Show password" aria-pressed="false">Show</button>
+          </div>
+          <p id="authLoginError" class="auth-login-error" hidden></p>
         </label>
       </div>
 
       <div id="authNewPasswordFields" hidden>
         <label>
           <span class="modal-label">New Password</span>
-          <input id="authNewPassword" type="password" autocomplete="new-password" />
+          <div class="auth-password-wrap">
+            <input id="authNewPassword" type="password" autocomplete="new-password" />
+            <button id="authNewPasswordToggle" class="auth-password-toggle" type="button" aria-label="Show password" aria-pressed="false">Show</button>
+          </div>
         </label>
         <label>
           <span class="modal-label">Confirm New Password</span>
-          <input id="authConfirmPassword" type="password" autocomplete="new-password" />
+          <div class="auth-password-wrap">
+            <input id="authConfirmPassword" type="password" autocomplete="new-password" />
+            <button id="authConfirmPasswordToggle" class="auth-password-toggle" type="button" aria-label="Show password" aria-pressed="false">Show</button>
+          </div>
         </label>
       </div>
 
@@ -260,6 +270,43 @@ function ensureAuthModal_() {
   wrapper.querySelector("#authSubmitBtn")?.addEventListener("click", handleAuthSubmit_);
   wrapper.querySelector("#authForgotBtn")?.addEventListener("click", () => showAuthStep_("reset"));
   wrapper.querySelector("#authBackBtn")?.addEventListener("click", () => showAuthStep_("login"));
+  wrapper.querySelector("#authPasswordToggle")?.addEventListener("click", () => toggleAuthPasswordVisibility_("authPassword", "authPasswordToggle"));
+  wrapper.querySelector("#authNewPasswordToggle")?.addEventListener("click", () => toggleAuthPasswordVisibility_("authNewPassword", "authNewPasswordToggle"));
+  wrapper.querySelector("#authConfirmPasswordToggle")?.addEventListener("click", () => toggleAuthPasswordVisibility_("authConfirmPassword", "authConfirmPasswordToggle"));
+  wrapper.querySelector("#authUsername")?.addEventListener("input", () => setAuthLoginError_(""));
+  wrapper.querySelector("#authPassword")?.addEventListener("input", () => setAuthLoginError_(""));
+}
+
+function setAuthLoginError_(message) {
+  const modal = document.getElementById("authModal");
+  if (!modal) return;
+  const errorEl = modal.querySelector("#authLoginError");
+  if (!errorEl) return;
+
+  const text = String(message || "").trim();
+  if (!text) {
+    errorEl.hidden = true;
+    errorEl.textContent = "";
+    return;
+  }
+
+  errorEl.textContent = text;
+  errorEl.hidden = false;
+}
+
+function toggleAuthPasswordVisibility_(inputId, toggleId) {
+  const modal = document.getElementById("authModal");
+  if (!modal) return;
+
+  const passwordInput = modal.querySelector(`#${inputId}`);
+  const toggleBtn = modal.querySelector(`#${toggleId}`);
+  if (!passwordInput || !toggleBtn) return;
+
+  const shouldShow = passwordInput.type === "password";
+  passwordInput.type = shouldShow ? "text" : "password";
+  toggleBtn.textContent = shouldShow ? "Hide" : "Show";
+  toggleBtn.setAttribute("aria-label", shouldShow ? "Hide password" : "Show password");
+  toggleBtn.setAttribute("aria-pressed", shouldShow ? "true" : "false");
 }
 
 function showAuthStep_(step) {
@@ -277,6 +324,39 @@ function showAuthStep_(step) {
   const submitBtn = modal.querySelector("#authSubmitBtn");
   const forgotBtn = modal.querySelector("#authForgotBtn");
   const backBtn = modal.querySelector("#authBackBtn");
+  const authPasswordInput = modal.querySelector("#authPassword");
+  const authPasswordToggle = modal.querySelector("#authPasswordToggle");
+  const newPasswordInput = modal.querySelector("#authNewPassword");
+  const newPasswordToggle = modal.querySelector("#authNewPasswordToggle");
+  const confirmPasswordInput = modal.querySelector("#authConfirmPassword");
+  const confirmPasswordToggle = modal.querySelector("#authConfirmPasswordToggle");
+
+  setAuthLoginError_("");
+
+  if (authPasswordInput) {
+    authPasswordInput.type = "password";
+  }
+  if (authPasswordToggle) {
+    authPasswordToggle.textContent = "Show";
+    authPasswordToggle.setAttribute("aria-label", "Show password");
+    authPasswordToggle.setAttribute("aria-pressed", "false");
+  }
+  if (newPasswordInput) {
+    newPasswordInput.type = "password";
+  }
+  if (newPasswordToggle) {
+    newPasswordToggle.textContent = "Show";
+    newPasswordToggle.setAttribute("aria-label", "Show password");
+    newPasswordToggle.setAttribute("aria-pressed", "false");
+  }
+  if (confirmPasswordInput) {
+    confirmPasswordInput.type = "password";
+  }
+  if (confirmPasswordToggle) {
+    confirmPasswordToggle.textContent = "Show";
+    confirmPasswordToggle.setAttribute("aria-label", "Show password");
+    confirmPasswordToggle.setAttribute("aria-pressed", "false");
+  }
 
   loginFields.hidden = step !== "login";
   newPasswordFields.hidden = step !== "new-password";
@@ -428,11 +508,12 @@ async function handleAuthSubmit_() {
 
   try {
     if (step === "login") {
+      setAuthLoginError_("");
       const username = String(modal.querySelector("#authUsername")?.value || "").trim().toUpperCase();
       const password = String(modal.querySelector("#authPassword")?.value || "").trim();
 
       if (!username || !password) {
-        showToast("Username and password are required.", true);
+        setAuthLoginError_("Username and password are required.");
         return;
       }
 
@@ -513,6 +594,9 @@ async function handleAuthSubmit_() {
     showAuthStep_("login");
   } catch (error) {
     debugError("handleAuthSubmit", error, {});
+    if (step === "login") {
+      setAuthLoginError_(error.message || "Authentication failed.");
+    }
     showToast(error.message || "Authentication failed.", true);
   } finally {
     if (submitBtn) {
